@@ -1,0 +1,119 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('guanggao', array('op' => 'display'))}">管理广告</a></li>
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('guanggao', array('op' => 'post'))}">添加广告</a></li>
+	
+</ul>
+
+{if $operation == 'display'}
+<div class="main">
+    <div class="panel panel-default">
+        <div class="table-responsive panel-body">
+            <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+                <table class="table table-hover" style="margin-top: 15px;">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:10%;">顺序</th>
+						<th style="width:15%;">图片</th>
+						<th style="width:25%;">名称</th>
+						<th style="width:20%;">位置</th>
+                        <th style="width:10%;text-align: right;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="level-list">
+                    {loop $category $row}
+                    <tr>
+                        <td>
+                      <input type="text" class="form-control" name="sid[{$row['tid']}]" value="{$row['sid']}"></td><td>
+                         <img src="{$row['fpic']}" width="100" height="50"  class="img-rounded"/></td>
+						<td>
+                          {$row['title']}</td>	
+						  
+							  
+						 <td>
+                        {$vodads[$row['classid']]}</td>	
+                        <td style="text-align: right;">
+                            <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('guanggao', array('op' => 'post', 'id' => $row['tid']))}" title="编辑"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-default btn-sm" onclick="return confirm('确认删除吗？');return false;" href="{php echo $this->createWebUrl('guanggao', array('op' => 'delete', 'id' => $row['tid']))}" title="删除"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                    {/loop}
+                    <tr>
+                        <td colspan="5">
+                            <input name="submit" type="submit" class="btn btn-primary" value="批量更新排序">
+                            <input type="hidden" name="token" value="{$_W['token']}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+  
+</div>
+</div>
+{elseif $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" >
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            广告编辑
+        </div>
+        <div class="panel-body">
+		
+		
+		 
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">位置</label>
+                <div class="col-sm-9">
+                <select class="form-control tpl-category-child" id="classid" name="classid">
+					<option value="-1" selected="selected">请选择广告位置</option>
+					 {loop $vodads $row $key}
+				<option value="{$row}" {if intval($item['classid'])==intval($row)} selected="selected" {/if}	>{$key}</option>
+					{/loop}
+				</select>
+                </div>
+            </div>
+			
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">名称</label>
+                <div class="col-sm-9">
+                    <input type="text" name="title" class="form-control" value="{$item['title']}" />
+                </div>
+            </div>
+			<div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">外链</label>
+                <div class="col-sm-9">
+                    <input type="text" name="flink" class="form-control" value="{$item['flink']}" />
+                </div>
+            </div>
+            
+			<div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">图片</label>
+                <div class="col-sm-9">
+                    {php echo tpl_form_field_image('fpic',$item['fpic'],$item['fpic'],array('width' => 80, 'height' => 80))}
+                    <span class="help-block" style="color:#f00">建议尺寸(640*158) </span>
+                </div>
+            </div>
+			
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+                <div class="col-sm-9">
+                    <input type="text" name="sid" class="form-control" value="{$item['sid']}" />
+					<div class="help-block">从大到小排列</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary ">
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+			 <input type="hidden" name="id" value="{$item['tid']}"/>
+			
+        </div>
+    </div>
+	</form>
+</div>
+{/if}
+{template 'common/footer'}
