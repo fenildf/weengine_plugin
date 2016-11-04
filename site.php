@@ -136,12 +136,19 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		$like = pdo_fetchall("SELECT * FROM " . tablename($this->modulename . '_ziyuan') . " WHERE weid = '{$weid}' and classid=$classid ORDER BY rand() limit 6"); 
 		$play_list = pdo_fetch("SELECT * FROM " . tablename($this->modulename . '_ziyuan_list') . " WHERE weid = '{$weid}' and classid=$tid ORDER BY tid DESC"); 
 		$list = stripslashes(gzuncompress(base64_decode($play_list["content"]))); 
+		//$list = $play_list["content"];
 		$arr = json_decode($list, true); 
 		$html = ""; 
 		$kk = 1; 
 		foreach ($arr as $k => $v) { 
+
 			if ($kk != $vid) { $class = ""; } 
-			else { $class = "focus"; $curr = base64_encode($v["tvalue"]); } 
+			else { 
+				$class = "focus"; 
+				$curr = base64_encode($v["tvalue"]); //缘来的代码，是要再加密一次，以防传递过程中泄漏么？
+				//CNzU0MzcxMg
+				//$curr=$v["tvalue"];
+			} 
 			$html.= "<li class='" . $class . "' ><a href='{$this->createMobileurl('play', array('id' => $tid, 'vid' => $kk)) }	'>" . $v["tname"] . "</a></li>"; $kk++; 
 		} 
 		include $this->template('play'); 
@@ -150,17 +157,60 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		global $_GPC, $_W; 
 		$weid = !empty($_W['uniacid']) ? $_W['uniacid'] : intval($_GET['weid']); 
 		$url = $_GPC['url']; 
-		if (empty($url)) { message('抱歉，不存在或是已经被删除！', $this->createMobileurl('index'), 'error'); } 
+		if (empty($url)) { message('抱歉，不存在或是已经被删除！'.$weid , $this->createMobileurl('index'), 'error'); } 
 		$url = base64_decode($url); 
-		$key = authcode($url, 'ENCODE', 'iweite.com'); 
+		$key = authcode($url, 'ENCODE', 'iweite.com'); //????
 		$isok = 0; $isurl = ""; 
 		$jiekou = pdo_fetchall("SELECT * FROM " . tablename($this->modulename . '_jiekou') . " WHERE weid = '{$weid}' "); 
 		foreach ($jiekou as $v) { 
 			if (strpos($url, $v["title"]) !== false) { $isurl = $v["fdes"]; } 
 		} 
-		if (empty($isurl)) { $base = "http://iweitecom.duapp.com/api.php?callback=?"; $access_token = authcode($url, 'ENCODE', 'iweite.com'); } 
+		if (empty($isurl)) { 
+			//$base = "http://iweitecom.duapp.com/api.php?callback=?"; $access_token = authcode($url, 'ENCODE', 'iweite.com'); 
+			//$base = $this->createWebUrl('auth', array('op' => 'display'));
+			$base = $this->createMobileurl('auth',array("url"=>$url));
+	//		$base = "http://localhost:8888/app/index.php?i=1&c=entry&url=".$url."&do=auth&m=iweite_vods"; 
+		} 
 		else { $purl = $isurl . $url; } 
 		include $this->template('yunparse'); 
+	}
+
+	//通过c值拼接成可解析的url，实际解析工作现在还是在第三方网站xt进行
+	public function doMobileauth(){
+		global $_GPC;
+		$content = $_GPC['url'];
+		if(empty($content)){exit("0");}
+		//以“$”开头，代表c值资源，%24 ＝ $
+		if(substr($content, 0,1)=='$'){
+			$len = strlen($content);
+			$content = substr($content, 1,$len-1);
+				// $this->createWebUrl('juji', array('op' => 'display', 'id' => $id))
+			//$ret = '{"msg":}';
+			//http://k.youku.com/player/getFlvPath/sid/847798492758687a5da82_00/st/mp4/fileid/0300200100580DEC22FD462D9B7D2F5A2F6B6C-9F43-EBD0-56F5-B5A5DBAA3922?K=77e1172a28ab97cf261f5294&hd=1&ts=6223&oip=1931252049&sid=847798492758687a5da82&token=4836&did=887e78cead669284b935d1eb0f865acd&ev=1&ctype=87&ep=qs%2FiFoZ%2B4HcM1ijW0s139OJaCJe4GVjjYx2nYs5%2BBZHlcblNmxcaud8BYR4gThW8sbNGPWaKTRspniUwEKNORVvyWmaY%2F17ghN4iIL5%2BlVQ4RLFSC1a9cKL%2F%2FDLjIZM4&skuid=qq812380294
+			//http://k.youku.com/player/getFlvPath/sid/047798500386687bea4d5_00/st/mp4/fileid/0300200100580DEC22FD462D9B7D2F5A2F6B6C-9F43-EBD0-56F5-B5A5DBAA3922?K=77e1172a28ab97cf261f5294&hd=1&ts=6223&oip=1931252049&sid=047798500386687bea4d5&token=4311&did=5c0e88d4a99f30838cf6ee53fa4c202f&ev=1&ctype=87&ep=IbQpSyYNsX%2FqaFV%2F5tC7So4cZb7jrzCDEOVMMZ%2B11v7lcblNmxcaud8BYR4gThW8sbNGPWaKTRspniUwEKNORVvyWmaY%2F17ghN4iIL5%2BlVRNZ%2BRNRr0EG9AMWZsA5uOy&skuid=qq812380294
+			//$ret =  array("msg"=>"ok","ext"=>"mp4","url"=>"http://183.6.222.215/youku/65712D405B8437362E2A86BFF/030020010057BD6F91F8922D9B7D2F94FAAA5A-207D-07E0-44F3-310D2C9F4C44.mp4");
+			$ret =  array("msg"=>"ok","ext"=>"link","url"=>"http://www.xtit.cc/jk/yky.php?vid=".$content);
+			//return 'fdafdsfdsafasdfsd';
+			//$arr = array("del"=>'1');
+			//$json_str = json_encode($arr);
+			//echo '[{"str":1,"ext":"mp4"}]';
+			//return;
+			//echo $json_str;
+
+		}elseif(strlen($content)>31 && substr($content,0,32)=='http://pl.youku.com/partner/m3u8'){
+			$ret = array("msg"=>"ok","ext"=>"m3u8","url"=>$content);
+			//$ret = array("msg"=>"ok","ext"=>"mp4","url"=>$content);
+		}elseif(strlen($content)>3 && substr($content, 0,4)=='http'){
+			//$ret = array("msg"=>"ok","ext"=>"m3u8","url"=>$content);
+
+			$ret = array("msg"=>"ok","ext"=>"mp4","url"=>$content);
+		}else{
+			//实际上返回的url未必是mp4，但在前端有很复杂的逻辑判断，例如需要mp4|xml｜m3u8等标签，才能处理url，所以这里暂时使用mp4返回
+			$ret =  array("msg"=>"ok","ext"=>"mp4","url"=>"http://183.6.222.215/youku/65712D405B8437362E2A86BFF/030020010057BD6F91F8922D9B7D2F94FAAA5A-207D-07E0-44F3-310D2C9F4C44.mp4");
+			
+		}
+
+		return json_encode($ret);
 	}
 	public function doMobileajax() { 
 		global $_GPC, $_W; $weid = !empty($_W['uniacid']) ? $_W['uniacid'] : intval($_GET['weid']); 
@@ -513,6 +563,7 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		} 
 		include $this->template('juji'); 
 	}
+
 	public function doWebupdate() { 
 		global $_W, $_GPC; checklogin(); 
 		load()->func('tpl'); 

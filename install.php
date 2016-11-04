@@ -1,5 +1,6 @@
 <?php
-pdo_query("CREATE TABLE IF NOT EXISTS `ams_iweite_vods_category` (
+$pre = 'iweite_vods_';
+pdo_query("CREATE TABLE IF NOT EXISTS ".tablename($pre."category")." (
 `tid` int(11) NOT NULL AUTO_INCREMENT,
 `title` varchar(300),
 `sid` int(4),
@@ -11,7 +12,7 @@ pdo_query("CREATE TABLE IF NOT EXISTS `ams_iweite_vods_category` (
 PRIMARY KEY (`tid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ams_iweite_vods_guanggao` (
+CREATE TABLE IF NOT EXISTS ".tablename($pre."guanggao")." (
 `tid` int(11) NOT NULL AUTO_INCREMENT,
 `classid` int(4),
 `title` varchar(300),
@@ -23,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `ams_iweite_vods_guanggao` (
 PRIMARY KEY (`tid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ams_iweite_vods_jiekou` (
+CREATE TABLE IF NOT EXISTS ".tablename($pre."jiekou")." (
 `tid` int(11) NOT NULL AUTO_INCREMENT,
 `weid` int(4),
 `title` varchar(300),
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `ams_iweite_vods_jiekou` (
 PRIMARY KEY (`tid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ams_iweite_vods_setting` (
+CREATE TABLE IF NOT EXISTS ".tablename($pre."setting")." (
 `tid` int(11) NOT NULL AUTO_INCREMENT,
 `weid` int(4),
 `title` varchar(300),
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ams_iweite_vods_setting` (
 PRIMARY KEY (`tid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ams_iweite_vods_ziyuan` (
+CREATE TABLE IF NOT EXISTS ".tablename($pre."ziyuan")." (
 `tid` int(11) NOT NULL AUTO_INCREMENT,
 `classid` int(4),
 `title` varchar(300),
@@ -62,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `ams_iweite_vods_ziyuan` (
 PRIMARY KEY (`tid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ams_iweite_vods_ziyuan_list` (
+CREATE TABLE IF NOT EXISTS ".tablename($pre."ziyuan_list")." (
 `tid` int(11) NOT NULL AUTO_INCREMENT,
 `classid` int(4),
 `content` mediumtext,

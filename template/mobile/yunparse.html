@@ -20,29 +20,52 @@
 <script type="text/javascript">
    $.ajax({
             type : "GET",
-            dataType : "jsonp",
+            //dataType : "jsonp",
             url : "{$base}",
-            data:{"access_token":'{$access_token}'},
+            //data:{"access_token":'{$access_token}'},
             success : function(result){
+              //alert('success');
                  callback(result);
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+              //alert(ret.msg);
+              //console.log(ret);
+              alert(XMLHttpRequest.status);
+              alert(XMLHttpRequest.readyState);
+              alert(textStatus);
+              console.log(XMLHttpRequest);
             }
    });
   function callback(data){
-  		if(data['msg'] == 'ok'){
+    console.log(data);
+    var ret = eval("("+data+")");
+    console.log(ret);
+    console.log(ret.msg);
+    data = ret;
+  		//if(data['msg'] == 'ok'){
+      if(data.msg == 'ok'){
+        console.log('ok-----------');
             var isiPad = navigator.userAgent.match(/iPad|iPhone|Android|Linux|iPod/i) != null;
-			
-            if(data['ext']=='link'){
+			       if(data.ext == 'link'){
+            //if(data['ext']=='link'){
                 $('#a1').html('<iframe width="100%" height="100%" allowTransparency="true" frameborder="0" scrolling="no" src="'+data['url']+'" id=aaaa></iframe>');
             }else if(isiPad || data['ext']=='h5'){
                 $('#a1').html('<video src="'+data['url']+'" controls="controls" autoplay="autoplay" width="100%" height="100%"></video>');
             }else{
-                if(data['ext']=='m3u8' || data['ext']=='m3u8_list'){
-                    var flashvars={f:'<?=$_WEITE['web_weburl']?>ckplayer/m3u8.swf',a:data['url'],c:0,s:4,lv:0,p:1,v:100}	
-                }else if(data['ext']=='mp4'){
-                    var flashvars={f:data['url'],c:0,s:0,p:1,v:100,h:3};
-                }else if(data['ext']=='xml'){
-                    var flashvars={f:data['url'],c:0,s:2,p:1,v:100,h:3};
+                //if(data['ext']=='m3u8' || data['ext']=='m3u8_list'){
+                if(data.ext == 'm3u8' || data.ext=='m3u8_list'){
+                  alert('<?=$_WEITE['web_weburl']?>');
+                    //var flashvars={f:'<?=$_WEITE['web_weburl']?>ckplayer/m3u8.swf',a:data['url'],c:0,s:4,lv:0,p:1,v:100}	
+                    var flashvars={f:'http://localhost:8888/addons/iweite_vods/template/themes/ckplayer/m3u8.swf',a:data['url'],c:0,s:4,lv:0,p:1,v:100}  
                 }
+                //else if(data['ext']=='mp4'){
+                else if(data.ext == 'mp4'){
+                    alert('mp4');
+                    var flashvars={f:data['url'],c:0,s:0,p:1,v:100,h:3};
+                }
+                // else if(data['ext']=='xml'){
+                //     var flashvars={f:data['url'],c:0,s:2,p:1,v:100,h:3};
+                // }
                 var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
                 CKobject.embedSWF('{RES}/themes/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','100%',flashvars,params);
             }
@@ -57,4 +80,10 @@
   }
 </script>
 {/if}
+<script type="text/javascript">
+ window.onload = function(){
+  console.log('{$base}');
+  console.log('{$purl}');
+ }
+</script>
 </body></html>
