@@ -189,7 +189,11 @@ class iweite_vodsModuleSite extends WeModuleSite {
 			//http://k.youku.com/player/getFlvPath/sid/847798492758687a5da82_00/st/mp4/fileid/0300200100580DEC22FD462D9B7D2F5A2F6B6C-9F43-EBD0-56F5-B5A5DBAA3922?K=77e1172a28ab97cf261f5294&hd=1&ts=6223&oip=1931252049&sid=847798492758687a5da82&token=4836&did=887e78cead669284b935d1eb0f865acd&ev=1&ctype=87&ep=qs%2FiFoZ%2B4HcM1ijW0s139OJaCJe4GVjjYx2nYs5%2BBZHlcblNmxcaud8BYR4gThW8sbNGPWaKTRspniUwEKNORVvyWmaY%2F17ghN4iIL5%2BlVQ4RLFSC1a9cKL%2F%2FDLjIZM4&skuid=qq812380294
 			//http://k.youku.com/player/getFlvPath/sid/047798500386687bea4d5_00/st/mp4/fileid/0300200100580DEC22FD462D9B7D2F5A2F6B6C-9F43-EBD0-56F5-B5A5DBAA3922?K=77e1172a28ab97cf261f5294&hd=1&ts=6223&oip=1931252049&sid=047798500386687bea4d5&token=4311&did=5c0e88d4a99f30838cf6ee53fa4c202f&ev=1&ctype=87&ep=IbQpSyYNsX%2FqaFV%2F5tC7So4cZb7jrzCDEOVMMZ%2B11v7lcblNmxcaud8BYR4gThW8sbNGPWaKTRspniUwEKNORVvyWmaY%2F17ghN4iIL5%2BlVRNZ%2BRNRr0EG9AMWZsA5uOy&skuid=qq812380294
 			//$ret =  array("msg"=>"ok","ext"=>"mp4","url"=>"http://183.6.222.215/youku/65712D405B8437362E2A86BFF/030020010057BD6F91F8922D9B7D2F94FAAA5A-207D-07E0-44F3-310D2C9F4C44.mp4");
-			$ret =  array("msg"=>"ok","ext"=>"link","url"=>"http://www.xtit.cc/jk/yky.php?vid=".$content);
+
+			//高清版本，但不确定2016.11.15之后是否正常能用
+			$ret = array("msg"=>"ok","ext"=>"link","url"=>"http://www.gzvuaz.cn/yy/?vid=".$content);
+			//xt论坛最新api版本，但貌似只有360p
+			//$ret = array("msg"=>"ok","ext"=>"link","url"=>"http://www.xtit.cc/jk/yky.php?vid=".$content);
 			//return 'fdafdsfdsafasdfsd';
 			//$arr = array("del"=>'1');
 			//$json_str = json_encode($arr);
