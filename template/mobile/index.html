@@ -33,7 +33,8 @@
 <section class="container search diy-content-space-small">
   <form action="" class="form" method="post" data-ui="static" id="search-form">
     <div data-role="input">
-      <input placeholder="输入片名进行搜索"  type="text"  autocomplete="off" autocorrect="off" maxlength="64" name="q" id="search">
+      <!-- <input placeholder="输入片名进行搜索"  type="text"  autocomplete="off" autocorrect="off" maxlength="64" name="q" id="search"> -->
+      <input placeholder="<?php echo _l('search_tips')?>"  type="text"  autocomplete="off" autocorrect="off" maxlength="64" name="q" id="search">
       <i class="iconfont icon-search"></i> <i class="iconfont icon-close"></i> </div>
 	  
   <button class="ui-btn" data-ui="danger small" type="button" id="search-btn">搜索</button>

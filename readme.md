@@ -27,3 +27,8 @@
 界面ui，手机端，都做的不错的说，本人比较汗颜，自问很难做到，这代码确实值得分享
 如还有问题，就在issue留言吧，谢谢，也对源作者说声谢谢
 
+
+
+更多详情，请看github主页
+https://github.com/sidney9111/weengine_plugin
+

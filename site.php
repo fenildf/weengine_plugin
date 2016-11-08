@@ -2,6 +2,11 @@
 
 defined('IN_IA') or exit('Access Denied');
 define('RES', '../addons/iweite_vods/template'); 
+//require "./lang.php";
+//require './framework/bootstrap.inc.php';
+define('IWEITE_ROOT', str_replace("\\", '/', dirname(dirname(__FILE__))));
+require IWEITE_ROOT."/iweite_vods/lang.php";
+//require IA_ROOT. '/addons/iweite_vods/version.php';//无效
 class iweite_vodsModuleSite extends WeModuleSite { 
 	public $modulename = 'iweite_vods'; 
 	public function doMobilejsdk() { 
@@ -33,7 +38,8 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		$share_url = empty($share['share_url']) ? $_W['siteroot'] . 'app' . str_replace("./","/",$this->createMobileUrl('index', array(), true)) : $share['share_url']; 
 		$classarr = pdo_fetchall("SELECT * FROM " . tablename($this->modulename . '_category') . " WHERE weid = '{$_W['uniacid']}' ORDER BY sid DESC, tid DESC"); 
 		$adsarr = pdo_fetchall("SELECT * FROM " . tablename($this->modulename . '_guanggao') . " WHERE weid = '{$_W['uniacid']}' and classid=0 ORDER BY sid DESC, tid DESC"); 
-		$titlearr = array("首播影院","卫视热播"); 
+		//$titlearr = array("首播影院","卫视热播"); 
+		$titlearr = array(_l('recommand1'),_l('recommand2')); 
 		$list = pdo_fetchall('SELECT * FROM' . tablename($this->modulename . '_category') . " WHERE weid= :weid ORDER BY sid DESC, tid DESC limit 2", array(':weid' => $_W['uniacid'])); 
 		foreach ($list as $key => $value) { 
 			$ilist[$key]['title'] = $titlearr[$key]; 
@@ -273,6 +279,9 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		include $this->template('fenlei'); 
 	} 
 	public function doWebziyuan() { 
+		// $lang = new Lang();
+		// $lang->autoFinishOrders();
+		echo _l('recommand1');
 		global $_W, $_GPC; 
 		checklogin(); 
 		load()->func('tpl');
