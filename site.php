@@ -5,6 +5,8 @@ define('RES', '../addons/iweite_vods/template');
 //require "./lang.php";
 //require './framework/bootstrap.inc.php';
 define('IWEITE_ROOT', str_replace("\\", '/', dirname(dirname(__FILE__))));
+define('CACHE_ROOT', IWEITE_ROOT."/iweite_vods/caches/");
+define('SITE_ROOT', IWEITE_ROOT."/iweite_vods/");
 require IWEITE_ROOT."/iweite_vods/lang.php";
 //require IA_ROOT. '/addons/iweite_vods/version.php';//无效
 class iweite_vodsModuleSite extends WeModuleSite { 
@@ -281,7 +283,13 @@ class iweite_vodsModuleSite extends WeModuleSite {
 	public function doWebziyuan() { 
 		// $lang = new Lang();
 		// $lang->autoFinishOrders();
-		echo _l('recommand1');
+		//echo _l('recommand1');
+
+		_T('mobile','index_shadow');
+
+		$file = _C('html');
+		$file->index();
+
 		global $_W, $_GPC; 
 		checklogin(); 
 		load()->func('tpl');
