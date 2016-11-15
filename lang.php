@@ -16,7 +16,71 @@ class Lang
     	echo "auto newt_finished(oid)";
     }
 }
+function _murl($segment, $params = array(), $noredirect = true, $addhost = false) {
+    global $_W;
+    //list($controller, $action, $do) = explode('/', $segment);
+    $controller = $segment;
+    if (!empty($addhost)) {
+        $url = $_W['siteroot'] . 'app/';
+    } else {
+        $url = '../app/';
+    }
+    $str = '';
+    if(uni_is_multi_acid()) {
+        $str = "&j={$_W['acid']}";
+    }
+    $url .= "index.php?i={$_W['uniacid']}{$str}&";
+    if (!empty($controller)) {
+        $url .= "c={$controller}&";
+    }
+    if (!empty($action)) {
+        $url .= "a={$action}&";
+    }
+    if (!empty($do)) {
+        $url .= "do={$do}&";
+    }
+    if (!empty($params)) {
+        $queryString = http_build_query($params, '', '&');
+        $url .= $queryString;
+        if ($noredirect === false) {
+            $url .= '&wxref=mp.weixin.qq.com#wechat_redirect';
+        }
+    }
+    return $url;
+}
 
+function _wurl($segment, $params = array()) {
+    list($controller, $action, $do) = explode('/', $segment);
+    $url = '../app/index.php?';
+    if (!empty($controller)) {
+        $url .= "c={$controller}&";
+    }
+    if (!empty($action)) {
+        $url .= "a={$action}&";
+    }
+    if (!empty($do)) {
+        $url .= "do={$do}&";
+    }
+    if (!empty($params)) {
+        $queryString = http_build_query($params, '', '&');
+        $url .= $queryString;
+    }
+    return $url;
+}
+function _MobileUrl($do, $query = array(), $noredirect = true) {
+    global $_W;
+    $query['do'] = $do;
+    //$query['m'] = strtolower($this->modulename);
+    $query['m'] = strtolower('iweite_vods');
+    return _murl('entry', $query, $noredirect);
+}
+
+
+function _WebUrl($do, $query = array()) {
+    $query['do'] = $do;
+    $query['m'] = strtolower($this->modulename);
+    return _wurl('site/entry', $query);
+}
 require IWEITE_ROOT."/iweite_vods/language/game.inc.php";
 //	class写法：
 //		$lang = new Lang();
@@ -56,7 +120,7 @@ function _C($class){
 }
 
 function _T($m,$template){
-
+    $a=array();
     //*** Wuzhicms cache func *********************
     $tpl_file  = 'template/' .$m . "/" .$template . '.html';
     // if(file_exists(SITE_ROOT.$tpl_file)){
@@ -121,7 +185,8 @@ function _T($m,$template){
 function _template_parse($str, $inmodule = false) {
     $str = preg_replace('/<!--{(.+?)}-->/s', '{$1}', $str);
     $str = preg_replace('/{template\s+(.+?)}/', '<?php (!empty($this) && $this instanceof WeModuleSite || '.intval($inmodule).') ? (include $this->template($1, TEMPLATE_INCLUDEPATH)) : (include template($1, TEMPLATE_INCLUDEPATH));?>', $str);
-    /*$str = preg_replace('/{php\s+(.+?)}/', '<?php $1?>', $str);*/
+    $str = preg_replace('/{php\s+(.+?)}/', '<?php $1?>', $str);
+    
     $str = preg_replace('/{if\s+(.+?)}/', '<?php if($1) { ?>', $str);
     $str = preg_replace('/{else}/', '<?php } else { ?>', $str);
     $str = preg_replace('/{else ?if\s+(.+?)}/', '<?php } else if($1) { ?>', $str);

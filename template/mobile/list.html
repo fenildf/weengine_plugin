@@ -15,9 +15,9 @@
 <!-- 主页面标题 -->
 <header class="mui-bar mui-bar-nav">
   <div class="game-fl diy-nav-bar "> 
-<a class="diy-control-item " href="{php echo $this->createMobileurl('index')}">首页</a>
+<a class="diy-control-item " href="{php echo _Mobileurl('index')}">首页</a>
 {loop $classarr $item}
-<a class="diy-control-item {if $item['tid']==$tid} mui-active{/if}" href="{php echo $this->createMobileurl('list', array('id'=>$item['tid']))}">{$item['title']}</a>
+<a class="diy-control-item {if $item['tid']==$tid} mui-active{/if}" href="{php echo _Mobileurl('list', array('id'=>$item['tid']))}">{$item['title']}</a>
 {/loop}
 </div>
 </header>
@@ -36,7 +36,7 @@
    			   
 		
 		{loop $items $row}	   
-		<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="{php echo $this->createMobileurl('play', array('id'=>$row['tid']))}"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px">
+		<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="{php echo _Mobileurl('play', array('id'=>$row['tid']))}"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px">
      {$row['fdes']}</span><img src="{RES}/themes/images/iweite.png"  data-original="{$row['fpic']}" class="grid-img lazy"/>
             <img class="game-corner" src="{RES}/themes/images/14470348816dL25.png" style="display: block">
             <div class="type-title">
@@ -63,7 +63,7 @@
 	
 </script>
 
-{php echo register_jssdk(false);} <!-- 放到其他引入的 js 之前 -->
+<!-- {1php echo register_jssdk(false);} --> <!-- 放到其他引入的 js 之前 -->
 <script>
 	wx.ready(function () {
 		var shareData = {

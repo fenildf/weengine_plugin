@@ -19,9 +19,9 @@
 <!-- 主页面标题 -->
 <header class="mui-bar mui-bar-nav">
   <div class="game-fl diy-nav-bar "> 
-<a class="diy-control-item mui-active" href="{php echo $this->createMobileurl('index')}">首页</a>
+<a class="diy-control-item mui-active" href="{php echo _Mobileurl('index');}">首页</a>
 {loop $classarr $item}
-<a class="diy-control-item" href="{php echo $this->createMobileurl('list', array('id'=>$item['tid']))}">{$item['title']}</a>
+<a class="diy-control-item" href="{php echo _Mobileurl('list', array('id'=>$item['tid']))}">{$item['title']}</a>
 {/loop}
 
       </div>
@@ -59,7 +59,7 @@
 <!-- end slider -->
 <ul class="mui-table-view mui-grid-view mui-grid-9 main-content" >
 		{loop $ilist $row}
-		<h5 class="mui-content-padded"><span class="content-nav-tip tiny-game-tip">精</span> <span class="content-title">{$row['title']}</span> <a class="diy-more" href="{php echo $this->createMobileurl('list', array('id'=>$row['tid']))}"> 更多<i class="iconfont icon-right"></i></a> </h5>
+		<h5 class="mui-content-padded"><span class="content-nav-tip tiny-game-tip">精</span> <span class="content-title">{$row['title']}</span> <a class="diy-more" href="{php echo _Mobileurl('list', array('id'=>$row['tid']))}"> 更多<i class="iconfont icon-right"></i></a> </h5>
   		<ul class="mui-table-view mui-grid-view mui-grid-9 list" id="list-content">
 			{loop $row[temp] $value}
 			<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="{php echo $this->createMobileurl('play', array('id'=>$value['tid']))}"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px">{$value['fdes']}</span> <img src="{RES}/themes/images/iweite.png"  data-original="{$value['fpic']}" class="grid-img lazy"/> <img class="game-corner" src="{RES}/themes/images/14470348816dL25.png" style="display: block">
@@ -91,7 +91,7 @@
 				$('#search').focus();
 				return false;
 			}
-			window.location.href="{php echo $this->createMobileurl('search')}&p="+encodeURIComponent($search.val());
+			window.location.href="{php echo _Mobileurl('search')}&p="+encodeURIComponent($search.val());
 
 		})
 
@@ -101,7 +101,7 @@
 		});
 	})	 
 </script>
-{php echo register_jssdk(false);} <!-- 放到其他引入的 js 之前 -->
+
 <script>
 	wx.ready(function () {
 		var shareData = {

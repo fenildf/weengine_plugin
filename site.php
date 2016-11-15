@@ -285,10 +285,10 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		// $lang->autoFinishOrders();
 		//echo _l('recommand1');
 
-		_T('mobile','index_shadow');
+		// _T('mobile','index_shadow');
 
-		$file = _C('html');
-		$file->index();
+		// $file = _C('html');
+		// $file->index($this);
 
 		global $_W, $_GPC; 
 		checklogin(); 
@@ -579,6 +579,16 @@ class iweite_vodsModuleSite extends WeModuleSite {
 					$data = array('fdes' => "更新至" . $data_c . "集", 'dateline' => time()); 
 					pdo_update($this->modulename . '_ziyuan', $data, array('tid' => $id)); 
 				} 
+
+				//生成静态页面
+
+				        //global $_GPC, $_W;
+
+
+				$html = _C('html');//实际上类class藏在language目录里，虽然有些怪，主要是简少类和目录，方便项目前期（现在如果不是很懂php obj写法）测试用。。。。。
+				$html->modulename = $this->modulename;
+				$html ->index($this);
+				$html->gen_list($this);
 				message('更新成功！', $this->createWebUrl('juji', array('op' => 'display', 'id' => $id)), 'success'); 
 			} 
 		} 
@@ -684,6 +694,24 @@ class iweite_vodsModuleSite extends WeModuleSite {
 		} 
 		include $this->template('update'); 
 	} 
+    //有一些io操作不完善，可以参照代码最后的公用function的做法
+    //由于$this原因，只能把template方法写在这里
+    //具体实现可参考lang.php里面的原始实现
+    public function _T($m,$template){
+        //*** Wuzhicms cache func *********************
+        $tpl_file  = 'template/' .$m . "/" .$template . '.html';
+        if (!is_writable(CACHE_ROOT . 'templates/')) {
+            exit(CACHE_ROOT . 'templates/ 目录不可写');
+        }
+        $cache_file = CACHE_ROOT . 'templates/' . $m . '/' . $template.'.php';    
+        
+
+        $data = file_get_contents(SITE_ROOT.$tpl_file);
+        $data = _template_parse($data);
+
+        $templatelen = @file_put_contents($cache_file, $data);
+        return $cache_file;
+	}
 	function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) { 
 		$iweite_auth_key = "www.iweite.com"; 
 		$ckey_length = 4; 
