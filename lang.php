@@ -16,6 +16,12 @@ class Lang
     	echo "auto newt_finished(oid)";
     }
 }
+//2016.11.16 remark by sidney
+//这个方法是搬过来的，还不完善
+//这里假定调用代码在/addons
+//而且假定。。。。生成的html也在addons
+//明显$segment也没有多个字段，为'entry',for app/index.php用
+//其他情况这个方法会出错
 function _murl($segment, $params = array(), $noredirect = true, $addhost = false) {
     global $_W;
     //list($controller, $action, $do) = explode('/', $segment);
@@ -23,7 +29,40 @@ function _murl($segment, $params = array(), $noredirect = true, $addhost = false
     if (!empty($addhost)) {
         $url = $_W['siteroot'] . 'app/';
     } else {
-        $url = '../app/';
+        $url = './';
+    }
+    $str = '';
+    if(uni_is_multi_acid()) {
+        $str = "&j={$_W['acid']}";
+    }
+    //$url .= "index.php?i={$_W['uniacid']}{$str}&";
+    $url .= $params['do'] . ".html?i=1";
+    // if (!empty($controller)) {
+    //     $url .= "c={$controller}&";
+    // }
+    // if (!empty($action)) {
+    //     $url .= "a={$action}&";
+    // }
+    // if (!empty($do)) {
+    //     $url .= "do={$do}&";
+    // }
+    if (!empty($params)) {
+        $queryString = http_build_query($params, '', '&');
+        $url .= $queryString;
+        if ($noredirect === false) {
+            $url .= '&wxref=mp.weixin.qq.com#wechat_redirect';
+        }
+    }
+    return $url;
+}
+function _murl_default($segment, $params = array(), $noredirect = true, $addhost = false) {
+    global $_W;
+    //list($controller, $action, $do) = explode('/', $segment);
+    $controller = $segment;
+    if (!empty($addhost)) {
+        $url = $_W['siteroot'] . 'app/';
+    } else {
+        $url = '../../../app/';
     }
     $str = '';
     if(uni_is_multi_acid()) {
@@ -72,7 +111,14 @@ function _MobileUrl($do, $query = array(), $noredirect = true) {
     $query['do'] = $do;
     //$query['m'] = strtolower($this->modulename);
     $query['m'] = strtolower('iweite_vods');
-    return _murl('entry', $query, $noredirect);
+    if($do=='search' || $do=='play'){
+        //search没有静态页面
+        return _murl_default('entry',$query,$noredirect);
+    }
+    else{
+        return _murl('entry', $query, $noredirect);    
+    }
+    
 }
 
 

@@ -363,6 +363,11 @@ class iweite_vodsModuleSite extends WeModuleSite {
 				else { 
 					pdo_insert($this->modulename . '_ziyuan', $data); 
 				} 
+				//这里也要更新首页，更新尽管不是必须得更新
+				$html = _C('html');
+				$html->modulename = $this->modulename;
+				$html->index($this);
+				$html->gen_list($this);
 				message('更新成功！', $this->createWebUrl('ziyuan', array('op' => 'display')), 'success'); 
 			} 
 		} 

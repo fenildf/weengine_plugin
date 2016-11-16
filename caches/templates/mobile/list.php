@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="max-age=10">
 <title><?php  echo $tt;?>_<?php  echo $setting['title'];?></title>
-<link rel="stylesheet" type="text/css" href="<?php echo RES;?>/themes/css/mui.min.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo RES;?>/themes/css/app.min.css?v=2.01" />
-<script type="text/javascript" charset="utf-8" src="<?php echo RES;?>/themes/js/zepto.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="<?php echo RES;?>/themes/js/zepto.picLazyLoad.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../<?php echo RES;?>/themes/css/mui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../<?php echo RES;?>/themes/css/app.min.css?v=2.01" />
+<script type="text/javascript" charset="utf-8" src="../../<?php echo RES;?>/themes/js/zepto.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../<?php echo RES;?>/themes/js/zepto.picLazyLoad.min.js"></script>
 </head>
 <body>
 <div class="mui-inner-wrap">
@@ -37,8 +37,8 @@
 		
 		<?php  if(is_array($items)) { foreach($items as $row) { ?>	   
 		<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="<?php  echo _Mobileurl('play', array('id'=>$row['tid']))?>"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px">
-     <?php  echo $row['fdes'];?></span><img src="<?php echo RES;?>/themes/images/iweite.png"  data-original="<?php  echo $row['fpic'];?>" class="grid-img lazy"/>
-            <img class="game-corner" src="<?php echo RES;?>/themes/images/14470348816dL25.png" style="display: block">
+     <?php  echo $row['fdes'];?></span><img src="../../<?php echo RES;?>/themes/images/iweite.png"  data-original="<?php  echo $row['fpic'];?>" class="grid-img lazy"/>
+            <img class="game-corner" src="../../<?php echo RES;?>/themes/images/14470348816dL25.png" style="display: block">
             <div class="type-title">
         <?php  echo $row['title'];?></div>
       </a> </li>

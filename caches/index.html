@@ -1,4 +1,4 @@
-1111111111baidu.com﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -6,12 +6,12 @@
 <meta http-equiv="Cache-Control" content="max-age=10">
 <title></title>
 <meta name="copyright" content="iweite.com" />
-<link rel="stylesheet" type="text/css" href="../addons/iweite_vods/template/themes/css/mui.min.css" />
-<link rel="stylesheet" type="text/css" href="../addons/iweite_vods/template/themes/css/swiper.min.css" />
-<link rel="stylesheet" type="text/css" href="../addons/iweite_vods/template/themes/css/app.min.css?v=2.01" />
-<script type="text/javascript" charset="utf-8" src="../addons/iweite_vods/template/themes/js/zepto.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="../addons/iweite_vods/template/themes/js/swiper.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="../addons/iweite_vods/template/themes/js/zepto.picLazyLoad.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../addons/iweite_vods/template/themes/css/mui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../../addons/iweite_vods/template/themes/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="../../../addons/iweite_vods/template/themes/css/app.min.css?v=2.01" />
+<script type="text/javascript" charset="utf-8" src="../../../addons/iweite_vods/template/themes/js/zepto.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../addons/iweite_vods/template/themes/js/swiper.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../addons/iweite_vods/template/themes/js/zepto.picLazyLoad.min.js"></script>
 </head>
 <body>
 
@@ -19,7 +19,8 @@
 <!-- 主页面标题 -->
 <header class="mui-bar mui-bar-nav">
   <div class="game-fl diy-nav-bar "> 
-<a class="diy-control-item mui-active" href="{php echo $this->createMobileurl('index');}">首页</a>
+<a class="diy-control-item mui-active" href="./index.html?i=1do=index&m=iweite_vods">首页</a>
+<a class="diy-control-item" href="./list1.html?i=1do=list1&m=iweite_vods">韩剧</a>
 
       </div>
 </header>
@@ -52,14 +53,20 @@
 
 <!-- end slider -->
 <ul class="mui-table-view mui-grid-view mui-grid-9 main-content" >
-		 
+				<h5 class="mui-content-padded"><span class="content-nav-tip tiny-game-tip">精</span> <span class="content-title">首播影院</span> <a class="diy-more" href="./list1.html?i=1do=list1&m=iweite_vods"> 更多<i class="iconfont icon-right"></i></a> </h5>
+  		<ul class="mui-table-view mui-grid-view mui-grid-9 list" id="list-content">
+						<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="../../../app/index.php?i=1&c=entry&id=2&do=play&m=iweite_vods"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px">美队</span> <img src="../../../addons/iweite_vods/template/themes/images/iweite.png"  data-original="http://localhost:8888/attachment/images/1/2016/08/D0299ONY9oqoo9Qy6HGa1U0NUz09EZ.jpg" class="grid-img lazy"/> <img class="game-corner" src="../../../addons/iweite_vods/template/themes/images/14470348816dL25.png" style="display: block">
+		  <div class="type-title">
+			美队3</div>
+		  </a> </li>
+		  	   
       </ul>
 </ul>
 
 
 <ul class="mui-table-view mui-grid-view mui-grid-9 main-content" style="margin-top:5px; padding-bottom:15px; text-align:center; color:#333; border-top:1px solid #d5d5d5" id=footer>
 <li class="mui-table-view-cell" style="font-size:12px; line-height:180%; height:30px; text-align:center"> 
-</li>
+&copy;微特大电影</li>
 </ul>
 <script type="text/javascript">
 	var swiper = new Swiper('#banner-slider', {
@@ -75,7 +82,7 @@
 				$('#search').focus();
 				return false;
 			}
-			window.location.href="{php echo $this->createMobileurl('search')}&p="+encodeURIComponent($search.val());
+			window.location.href="../../../app/index.php?i=1&c=entry&do=search&m=iweite_vods&p="+encodeURIComponent($search.val());
 
 		})
 
@@ -85,14 +92,14 @@
 		});
 	})	 
 </script>
-{php echo register_jssdk(false);} <!-- 放到其他引入的 js 之前 -->
+
 <script>
 	wx.ready(function () {
 		var shareData = {
             title: '',
             desc: '',
-            link: '',
-            imgUrl: ''
+            link: 'http://localhost:8888/app/index.html?i=1do=index&m=iweite_vods',
+            imgUrl: 'http://localhost:8888/addons/iweite_vods/icon.jpg'
         };
 		
 		 wx.hideAllNonBaseMenuItem();

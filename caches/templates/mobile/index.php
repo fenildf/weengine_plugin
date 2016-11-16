@@ -6,12 +6,12 @@
 <meta http-equiv="Cache-Control" content="max-age=10">
 <title><?php  echo $setting['title'];?></title>
 <meta name="copyright" content="iweite.com" />
-<link rel="stylesheet" type="text/css" href="<?php echo RES;?>/themes/css/mui.min.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo RES;?>/themes/css/swiper.min.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo RES;?>/themes/css/app.min.css?v=2.01" />
-<script type="text/javascript" charset="utf-8" src="<?php echo RES;?>/themes/js/zepto.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="<?php echo RES;?>/themes/js/swiper.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="<?php echo RES;?>/themes/js/zepto.picLazyLoad.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../<?php echo RES;?>/themes/css/mui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../<?php echo RES;?>/themes/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="../../<?php echo RES;?>/themes/css/app.min.css?v=2.01" />
+<script type="text/javascript" charset="utf-8" src="../../<?php echo RES;?>/themes/js/zepto.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../<?php echo RES;?>/themes/js/swiper.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../<?php echo RES;?>/themes/js/zepto.picLazyLoad.min.js"></script>
 </head>
 <body>
 
@@ -21,7 +21,7 @@
   <div class="game-fl diy-nav-bar "> 
 <a class="diy-control-item mui-active" href="<?php  echo _Mobileurl('index');?>">首页</a>
 <?php  if(is_array($classarr)) { foreach($classarr as $item) { ?>
-<a class="diy-control-item" href="<?php  echo _Mobileurl('list', array('id'=>$item['tid']))?>"><?php  echo $item['title'];?></a>
+<a class="diy-control-item" href="<?php  echo _Mobileurl('list' . $item['tid'])?>"><?php  echo $item['title'];?></a>
 <?php  } } ?>
 
       </div>
@@ -59,10 +59,10 @@
 <!-- end slider -->
 <ul class="mui-table-view mui-grid-view mui-grid-9 main-content" >
 		<?php  if(is_array($ilist)) { foreach($ilist as $row) { ?>
-		<h5 class="mui-content-padded"><span class="content-nav-tip tiny-game-tip">精</span> <span class="content-title"><?php  echo $row['title'];?></span> <a class="diy-more" href="<?php  echo _Mobileurl('list', array('id'=>$row['tid']))?>"> 更多<i class="iconfont icon-right"></i></a> </h5>
+		<h5 class="mui-content-padded"><span class="content-nav-tip tiny-game-tip">精</span> <span class="content-title"><?php  echo $row['title'];?></span> <a class="diy-more" href="<?php  echo _Mobileurl('list' . $row['tid'])?>"> 更多<i class="iconfont icon-right"></i></a> </h5>
   		<ul class="mui-table-view mui-grid-view mui-grid-9 list" id="list-content">
 			<?php  if(is_array($row['temp'])) { foreach($row['temp'] as $value) { ?>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="<?php  echo $this->createMobileurl('play', array('id'=>$value['tid']))?>"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px"><?php  echo $value['fdes'];?></span> <img src="<?php echo RES;?>/themes/images/iweite.png"  data-original="<?php  echo $value['fpic'];?>" class="grid-img lazy"/> <img class="game-corner" src="<?php echo RES;?>/themes/images/14470348816dL25.png" style="display: block">
+			<li class="mui-table-view-cell mui-media mui-col-xs-4"> <a href="<?php  echo _Mobileurl('play', array('id'=>$value['tid']))?>"> <span style="position:absolute; right:0; bottom:40px; height:20px; line-height:20px; background:#FF6600; color:#FFFFFF; display:block; padding:0px 3px;  overflow:hidden; font-size:11px"><?php  echo $value['fdes'];?></span> <img src="../../<?php echo RES;?>/themes/images/iweite.png"  data-original="<?php  echo $value['fpic'];?>" class="grid-img lazy"/> <img class="game-corner" src="../../<?php echo RES;?>/themes/images/14470348816dL25.png" style="display: block">
 		  <div class="type-title">
 			<?php  echo $value['title'];?></div>
 		  </a> </li>
